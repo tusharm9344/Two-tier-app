@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Notes App</title>
+  <style>
+    body { font-family: sans-serif; max-width: 600px; margin: 40px auto; padding: 0 20px; }
+    input[type=text] { width: 80%; padding: 8px; }
+    button { padding: 8px 14px; cursor: pointer; }
+    ul { list-style: none; padding: 0; }
+    li { padding: 10px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; }
+  </style>
+</head>
+<body>
+  <h2>Notes</h2>
+
+  <form action="/notes" method="POST">
+    <input type="text" name="content" placeholder="Write a note..." required>
+    <button type="submit">Add</button>
+  </form>
+
+  <ul>
+    {% for note in notes %}
+    <li>
+      {{ note.content }}
+      <form action="/notes/{{ note.id }}" method="POST" style="display:inline">
+        <input type="hidden" name="_method" value="DELETE">
+        <button onclick="deleteNote({{ note.id }}); return false;">✕</button>
+      </form>
+    </li>
+    {% endfor %}
+  </ul>
+
+  <script>
+    function deleteNote(id) {
+      fetch('/notes/' + id, { method: 'DELETE' })
+        .then(() => location.reload());
+    }
+  </script>
+</body>
+</html>
