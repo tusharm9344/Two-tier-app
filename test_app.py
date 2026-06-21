@@ -1,4 +1,7 @@
 import pytest
+import os
+os.environ['DATABASE_URL'] = 'sqlite:///:memory:'
+
 from app import app, db
 
 @pytest.fixture
