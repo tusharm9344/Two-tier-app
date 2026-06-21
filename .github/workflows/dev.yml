@@ -54,5 +54,5 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd ~/2-tier
-            docker-compose pull
-            docker-compose up -d
+            docker compose pull
+            docker compose up -d
